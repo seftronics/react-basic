@@ -42,6 +42,16 @@ export default function LearnLifecycleIndexPage() {
         Pilih materi yang ingin dipresentasikan atau dipelajari.
       </p>
 
+      <Link
+        href="/learn-lifecycle/docs"
+        className="rounded-lg border border-zinc-300 bg-zinc-50 p-4 transition hover:bg-zinc-100"
+      >
+        <p className="font-semibold">Dokumentasi Presentasi (doc/README.md)</p>
+        <p className="text-sm text-zinc-600">
+          Shortcut ke daftar dokumen untuk flow share knowledge.
+        </p>
+      </Link>
+
       <div className="flex flex-col gap-3">
         {MATERI.map((item) => (
           <Link

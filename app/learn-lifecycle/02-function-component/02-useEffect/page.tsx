@@ -3,11 +3,61 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+function CleanupEffectLamaDemo() {
+    const [keyword, setKeyword] = useState("");
+
+    useEffect(() => {
+        if (!keyword) {
+            return;
+        }
+
+        console.log("[cleanup-lama] jalankan effect baru:", keyword);
+        const id = setTimeout(() => {
+            console.log("[cleanup-lama] proses keyword:", keyword);
+        }, 500);
+
+        return () => {
+            clearTimeout(id);
+            console.log("[cleanup-lama] cleanup effect lama:", keyword);
+        };
+    }, [keyword]);
+
+    return (
+        <section style={{ marginTop: 24 }}>
+            <h2>5. Simple: Cleanup Effect Lama</h2>
+            <p>Ketik cepat, lalu lihat console: cleanup lama akan jalan sebelum effect baru.</p>
+            <input
+                value={keyword}
+                onChange={(event) => setKeyword(event.target.value)}
+                placeholder="Ketik keyword..."
+                style={{ padding: 8, minWidth: 260, marginTop: 8 }}
+            />
+        </section>
+    );
+}
+
+function CleanupTerakhirChild() {
+    useEffect(() => {
+        console.log("[cleanup-terakhir] mounted");
+        const id = setInterval(() => {
+            console.log("[cleanup-terakhir] interval jalan");
+        }, 1000);
+
+        return () => {
+            clearInterval(id);
+            console.log("[cleanup-terakhir] cleanup terakhir saat unmount");
+        };
+    }, []);
+
+    return <p>Child aktif. Unmount untuk lihat cleanup terakhir di console.</p>;
+}
+
 export default function Page() {
     const [count, setCount] = useState(0);
     const [query, setQuery] = useState("");
     const [seconds, setSeconds] = useState(0);
     const [isTimerRunning, setIsTimerRunning] = useState(false);
+    const [showCleanupChild, setShowCleanupChild] = useState(true);
 
     console.log("[useEffect] render", { count, query, seconds });
 
@@ -110,6 +160,22 @@ export default function Page() {
                 <p style={{ marginTop: 8, color: isTimerRunning ? "green" : "red" }}>
                     Status: {isTimerRunning ? "Running" : "Stopped"}
                 </p>
+            </section>
+
+            <CleanupEffectLamaDemo />
+
+            <section style={{ marginTop: 24 }}>
+                <h2>6. Simple: Cleanup Terakhir (Unmount)</h2>
+                <p>Toggle child. Saat child hilang, cleanup terakhir akan dijalankan.</p>
+                <button
+                    onClick={() => setShowCleanupChild((prev) => !prev)}
+                    style={{ marginTop: 8 }}
+                >
+                    {showCleanupChild ? "Unmount Child" : "Mount Child"}
+                </button>
+                <div style={{ marginTop: 10 }}>
+                    {showCleanupChild ? <CleanupTerakhirChild /> : <p>Child tidak aktif.</p>}
+                </div>
             </section>
         </main>
     );
