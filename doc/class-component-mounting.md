@@ -13,11 +13,18 @@ Fase mounting terjadi saat class component pertama kali dibuat dan dipasang ke D
 
 ```mermaid
 flowchart TD
-    A[constructor] --> B[getDerivedStateFromProps]
-    B --> C[render]
-    C --> D[Commit DOM]
-    D --> E[componentDidMount]
-    E --> F[Side effects: fetch, subscribe, timer]
+    S([Start]) --> A[1. constructor]
+    A --> B[2. getDerivedStateFromProps]
+    B --> C[3. render]
+    C --> D[4. Commit DOM]
+    D --> E[5. componentDidMount]
+    E --> F[6. Side effects: fetch, subscribe, timer]
+    F --> Z([Finish])
+    classDef default fill:#eff6ff,stroke:#2563eb,stroke-width:1.5px,color:#1e3a8a;
+    classDef start fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#166534;
+    classDef finish fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#991b1b;
+    class S start;
+    class Z finish;
 ```
 
 ## Boleh dan Tidak Boleh

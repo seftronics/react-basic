@@ -32,15 +32,22 @@ Repository ini berisi materi belajar React lifecycle untuk:
 
 ```mermaid
 flowchart TD
-    A[Component dibuat] --> B[Mount]
-    B --> C[Render]
-    C --> D[Commit ke DOM]
-    D --> E[Effect berjalan]
-    E --> F{State / Props berubah?}
-    F -- Ya --> G[Update + re-render]
+    S([Start]) --> A[1. Component dibuat]
+    A --> B[2. Mount]
+    B --> C[3. Render]
+    C --> D[4. Commit ke DOM]
+    D --> E[5. Effect berjalan]
+    E --> F{6. State / Props berubah?}
+    F -- Ya --> G[7. Update + re-render]
     G --> D
-    F -- Tidak, component dihapus --> H[Unmount]
-    H --> I[Cleanup]
+    F -- Tidak, component dihapus --> H[8. Unmount]
+    H --> I[9. Cleanup]
+    I --> Z([Finish])
+    classDef default fill:#eff6ff,stroke:#2563eb,stroke-width:1.5px,color:#1e3a8a;
+    classDef start fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#166534;
+    classDef finish fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#991b1b;
+    class S start;
+    class Z finish;
 ```
 
 ### Penjelasan Diagram

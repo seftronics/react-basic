@@ -12,12 +12,19 @@
 
 ```mermaid
 flowchart TD
-    A[Render] --> B[Commit DOM]
-    B --> C[Effect berjalan]
-    C --> D{Dependency berubah?}
-    D -- Ya --> E[Cleanup effect lama]
+    S([Start]) --> A[1. Render]
+    A --> B[2. Commit DOM]
+    B --> C[3. Effect berjalan]
+    C --> D{4. Dependency berubah?}
+    D -- Ya --> E[5. Cleanup effect lama]
     E --> A
-    D -- Unmount --> F[Cleanup terakhir]
+    D -- Unmount --> F[5. Cleanup terakhir]
+    F --> Z([Finish])
+    classDef default fill:#eff6ff,stroke:#2563eb,stroke-width:1.5px,color:#1e3a8a;
+    classDef start fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#166534;
+    classDef finish fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#991b1b;
+    class S start;
+    class Z finish;
 ```
 
 ## Contoh Cleanup

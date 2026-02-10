@@ -12,10 +12,12 @@ Dokumen ringkas untuk memahami lifecycle pada function component React.
 
 ```mermaid
 sequenceDiagram
+    autonumber
     participant R as React
     participant C as Component
     participant E as useEffect
 
+    Note over R,E: Start
     R->>C: Initial render (mount)
     C-->>R: Return JSX
     R->>E: Jalankan effect
@@ -28,6 +30,7 @@ sequenceDiagram
     end
 
     R->>E: Cleanup saat unmount
+    Note over R,E: Finish
 ```
 
 ### Penjelasan Diagram
