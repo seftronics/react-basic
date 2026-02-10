@@ -56,6 +56,7 @@ flowchart TD
 2. `Mount` -> komponen pertama kali masuk ke tree UI.
 3. `Render` -> React menjalankan function/class untuk menghasilkan JSX.
 4. `Commit ke DOM` -> hasil render diterapkan ke DOM.
+   - Catatan: `Commit DOM` adalah proses React memasukkan hasil render ke DOM asli browser sehingga perubahan terlihat oleh user.
 5. `Effect berjalan` -> `useEffect` dijalankan setelah commit.
 6. `State / Props berubah?`
    - Jika **ya**: masuk ke `Update + re-render`, lalu commit ulang.
