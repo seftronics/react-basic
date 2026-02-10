@@ -27,6 +27,47 @@ flowchart TD
     class Z finish;
 ```
 
+## Bedanya `cleanup effect lama` vs `cleanup terakhir`
+
+### 1. Cleanup effect lama
+
+- Terjadi saat komponen **masih hidup** dan effect akan dijalankan ulang.
+- Pemicu: dependency berubah (misalnya `query` dari `"rea"` jadi `"react"`).
+- Tujuan: membersihkan efek sebelumnya supaya tidak bentrok dengan efek baru.
+
+Contoh kasus:
+- Membersihkan `setTimeout` debounce lama sebelum membuat timeout baru.
+- Melepas event listener lama sebelum memasang listener baru.
+
+### 2. Cleanup terakhir
+
+- Terjadi saat komponen **akan unmount** (keluar dari tree).
+- Pemicu: halaman berpindah, conditional render jadi `false`, atau parent unmount.
+- Tujuan: memastikan tidak ada efek yang tertinggal setelah komponen hilang.
+
+Contoh kasus:
+- `clearInterval` timer.
+- `unsubscribe` websocket/subscription.
+- `abort` request yang masih berjalan.
+
+## Timeline Singkat
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant C as Component
+    participant E as useEffect
+
+    Note over C,E: Start
+    C->>E: Mount -> jalankan effect #1
+    C->>E: Dependency berubah
+    E-->>E: Cleanup effect lama (#1)
+    C->>E: Jalankan effect #2
+    C->>E: Unmount
+    E-->>E: Cleanup terakhir (#2)
+    Note over C,E: Finish
+```
+
 ## Contoh Cleanup
 
 ```tsx
